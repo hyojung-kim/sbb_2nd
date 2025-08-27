@@ -1,6 +1,7 @@
 package com.mysite.sbb.article;
 
 import com.mysite.sbb.DataNotFoundException;
+import com.mysite.sbb.user.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,11 +32,12 @@ public class ArticleService {
             throw new DataNotFoundException("article not found");
         }
     }
-    public void create(String subject, String content) {
+    public void create(String subject, String content, SiteUser user) {
         Article article = new Article();
         article.setContent(content);
         article.setSubject(subject);
         article.setCreateDate(LocalDateTime.now());
+        article.setAuthor(user);
         this.articleRepository.save(article);
     }
 

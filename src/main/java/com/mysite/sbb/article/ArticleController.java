@@ -1,6 +1,8 @@
 package com.mysite.sbb.article;
 
 import com.mysite.sbb.comment.CommentForm;
+import com.mysite.sbb.user.SiteUser;
+import com.mysite.sbb.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -9,11 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RequestMapping("/article")
 @RequiredArgsConstructor
 @Controller
 public class ArticleController {
     private final ArticleService articleService;
+    private final UserService userService;
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
@@ -36,12 +41,13 @@ public class ArticleController {
     }
 
     @PostMapping("/create")
-    public String questionCreate(@Valid ArticleForm articleForm, BindingResult bindingResult) {
+    public String questionCreate(@Valid ArticleForm articleForm, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
             return "/article/article_form";
         }
         // TODO 질문을 저장한다.
-        this.articleService.create(articleForm.getSubject(), articleForm.getContent());
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.articleService.create(articleForm.getSubject(), articleForm.getContent(), siteUser);
         return "redirect:/article/list"; // 질문 저장후 질문목록으로 이동
     }
 

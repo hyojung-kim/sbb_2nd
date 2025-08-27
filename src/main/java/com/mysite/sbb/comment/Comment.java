@@ -1,6 +1,7 @@
 package com.mysite.sbb.comment;
 
 import com.mysite.sbb.article.Article;
+import com.mysite.sbb.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,4 +25,7 @@ public class Comment {
 
     @ManyToOne
     private Article article;
+
+    @ManyToOne
+    private SiteUser author;
 }
