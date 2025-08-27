@@ -8,11 +8,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="artile, index : ${artileList}">
+        <tr th:each="article, index : ${articleList}">
             <td>
-                <a th:href="@{|/artile/detail/${artile.id}|}" th:text="${artile.subject}"></a>
+                <a th:href="@{|/article/detail/${article.id}|}" th:text="${article.subject}"></a>
             </td>
-            <td th:text="${artile.createDate}"></td>
+            <td th:text="${article.createDate}"></td>
         </tr>
         </tbody>
     </table>

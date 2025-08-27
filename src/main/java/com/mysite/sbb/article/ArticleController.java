@@ -16,14 +16,14 @@ public class ArticleController {
     @GetMapping("/article/list")
     public String list(Model model) {
         List<Article> artileList = this.articleService.findAll();
-        model.addAttribute("artileList", artileList);
+        model.addAttribute("articleList", artileList);
         return "/article/article_list";
     }
     @GetMapping(value = "/article/detail/{id}")
     public String detail(Model model, @PathVariable("id") Integer id) {
         Article article = this.articleService.getArticle(id);
         model.addAttribute("article", article);
-        return "article_detail";
+        return "/article/article_detail";
     }
 
 }

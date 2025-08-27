@@ -1,5 +1,6 @@
 package com.mysite.sbb.article;
 
+import com.mysite.sbb.DataNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,11 @@ public class ArticleService {
     }
 
     public Article getArticle(Integer id) {
-        Optional<Article> question = this.articleRepository.findById(id);
-        return question.get();
+        Optional<Article> article = this.articleRepository.findById(id);
+        if (article.isPresent()) {
+            return article.get();
+        } else {
+            throw new DataNotFoundException("article not found");
+        }
     }
 }
