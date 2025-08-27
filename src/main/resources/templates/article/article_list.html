@@ -9,7 +9,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="article, index : ${articleList}">
+        <tr th:each="article, loop : ${paging}">
             <td>
                 <a th:href="@{|/article/detail/${article.id}|}" th:text="${article.subject}"></a>
             </td>
