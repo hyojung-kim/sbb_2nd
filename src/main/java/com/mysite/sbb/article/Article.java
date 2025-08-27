@@ -32,4 +32,6 @@ public class Article {
 
     @ManyToOne
     private SiteUser author;
+
+    private LocalDateTime modifyDate;
 }

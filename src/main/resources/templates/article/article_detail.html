@@ -5,6 +5,12 @@
       <div class="mb-2">
           <span th:if="${article.author != null}" th:text="${article.author.username}"></span>
       </div>
+      <div class="my-3">
+          <a th:href="@{|/article/modify/${article.id}|}" class="btn btn-sm btn-outline-secondary"
+             sec:authorize="isAuthenticated()"
+             th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
+             th:text="수정"></a>
+      </div>
 
     <h5 th:text="|${#lists.size(article.commentList)}개의 답변이 있습니다.|"></h5>
     <div>
