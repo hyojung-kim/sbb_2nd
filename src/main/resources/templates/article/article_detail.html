@@ -11,8 +11,10 @@
       </ul>
     </div>
 
-    <form th:action="@{|/comment/create/${article.id}|}" method="post">
-      <textarea name="content" id="content" rows="15"></textarea>
+    <form th:action="@{|/comment/create/${article.id}|}" method="post" th:object="${commentForm}">
+      <div th:replace="~{form_errors :: formErrorsFragment}">
+      </div>
+      <textarea name="content" id="content" rows="15" th:field="*{content}"></textarea>
       <input type="submit" value="답변등록">
     </form>
   </div>

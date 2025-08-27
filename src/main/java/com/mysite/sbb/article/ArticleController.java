@@ -1,5 +1,6 @@
 package com.mysite.sbb.article;
 
+import com.mysite.sbb.comment.CommentForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,10 @@ public class ArticleController {
         return "/article/article_list";
     }
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id) {
+    public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm) {
         Article article = this.articleService.getArticle(id);
         model.addAttribute("article", article);
+        model.addAttribute("commentForm", new CommentForm());
         return "/article/article_detail";
     }
     @GetMapping("/create")
