@@ -3,6 +3,7 @@ package com.mysite.sbb.article;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -20,5 +21,10 @@ public class Article {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @CreatedDate   // 생성 시 자동 세팅
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createDate;
+
+    @ManyToOne
+    private Article article;
 }
