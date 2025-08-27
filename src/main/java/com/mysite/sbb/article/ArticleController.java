@@ -6,6 +6,7 @@ import com.mysite.sbb.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,11 +36,14 @@ public class ArticleController {
         model.addAttribute("commentForm", new CommentForm());
         return "/article/article_detail";
     }
+
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/create")
     public String questionCreate(ArticleForm articleForm) {
         return "/article/article_form";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public String questionCreate(@Valid ArticleForm articleForm, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
