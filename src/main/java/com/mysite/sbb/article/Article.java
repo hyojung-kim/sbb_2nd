@@ -1,11 +1,13 @@
 package com.mysite.sbb.article;
 
+import com.mysite.sbb.comment.Comment;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,6 +27,6 @@ public class Article {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createDate;
 
-    @ManyToOne
-    private Article article;
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
+    private List<Comment> commentList;
 }

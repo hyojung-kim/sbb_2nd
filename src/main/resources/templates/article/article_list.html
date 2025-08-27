@@ -1,0 +1,19 @@
+<html layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <table>
+            <thead>
+            <tr>
+                <th>제목</th>
+                <th>작성일시</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="artile : ${artileList}">
+                <td th:text="${artile.subject}"></td>
+                <td th:text="${artile.createDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</html>

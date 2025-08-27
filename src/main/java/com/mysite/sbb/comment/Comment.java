@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
@@ -24,6 +23,6 @@ public class Comment {
     @Column(nullable = false, updatable = false)
     private LocalDateTime createDate;
 
-    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
-    private List<Article> articleList;
+    @ManyToOne
+    private Article article;
 }

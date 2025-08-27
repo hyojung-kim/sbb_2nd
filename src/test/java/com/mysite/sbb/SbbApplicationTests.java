@@ -1,10 +1,14 @@
 package com.mysite.sbb;
 
+import com.mysite.sbb.article.Article;
+import com.mysite.sbb.article.ArticleRepository;
 import com.mysite.sbb.test.TestData;
 import com.mysite.sbb.test.TestRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDateTime;
 
 
 @SpringBootTest
@@ -12,6 +16,9 @@ class SbbApplicationTests {
 
     @Autowired
     private TestRepository testRepository;
+    @Autowired
+    private ArticleRepository articleRepository;
+
 
     @Test
     void testJpa() {
@@ -21,6 +28,16 @@ class SbbApplicationTests {
         this.testRepository.save(test);  // 첫번째 질문 저장
 
     }
+    @Test
+    void testJpa01(){
+        Article a1 = new Article();
+        //a1.setId(1);
+        a1.setSubject("제목1");
+        a1.setContent("내용1");
+        a1.setCreateDate(LocalDateTime.now());
+        this.articleRepository.save(a1);
+    }
+
 
 }
 
