@@ -13,6 +13,11 @@
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td>
                 <a th:href="@{|/article/detail/${article.id}|}" th:text="${article.subject}"></a>
+                <span class="text-danger small ms-2"
+                      th:if="${#lists.size(article.commentList) > 0}"
+                      th:text="${#lists.size(article.commentList)}">
+
+                </span>
             </td>
             <td th:text="${article.createDate}"></td>
         </tr>
