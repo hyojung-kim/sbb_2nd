@@ -6,6 +6,11 @@
           <span th:if="${article.author != null}" th:text="${article.author.username}"></span>
       </div>
       <div class="my-3">
+          <a  id="recommend_article"
+              class="recommend btn btn-sm btn-outline-secondary">
+              추천
+              <span id="recommend_article_count" class="badge rounded-pill bg-success" th:text="${#lists.size(article.voter)}"></span>
+          </a>
           <a th:href="@{|/article/modify/${article.id}|}" class="btn btn-sm btn-outline-secondary"
              sec:authorize="isAuthenticated()"
              th:if="${article.author != null and #authentication.getPrincipal().getUsername() == article.author.username}"
@@ -28,6 +33,9 @@
               <span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
           </div>
           <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+
+
+
           <a th:href="@{|/comment/modify/${comment.id}|}" class="btn btn-sm btn-outline-secondary"
              sec:authorize="isAuthenticated()"
              th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.username}"
@@ -51,3 +59,51 @@
     </form>
   </div>
 </html>
+
+<script th:inline="javascript">
+    // 질문
+    $('#recommend_article').on('click', function() {
+        const article_id = [[${article.id}]];
+
+        if( confirm('정말 추천하시겠습니까?') ) {
+            $.ajax({
+                url: "/article/vote/" + article_id, // 요청 보낼 서버 URL
+                type: "GET", // 요청 메서드("GET", "PUT", "POST", "DELETE") 등
+                success: function(response) {
+                    // 요청이 성공했을 때 실행되는 함수
+                    $("#recommend_article_count").text(response);
+                    console.log("응답 : " + response);
+                },
+                error: function(xhr, status, error) {
+                    // 요청이 실패했을 때 실행되는 함수
+                    console.log("에러 : " + error);
+                }
+
+            });
+        }
+    });
+
+
+    // 답변
+    $('.recommend_answer').on('click', function() {
+        const _this = $(this);
+        const answer_id = _this.find('input[name=answer_id]').val();
+
+        if( confirm('정말 추천하시겠습니까?') ) {
+            $.ajax({
+                url: "/answer/vote/" + answer_id, // 요청 보낼 서버 URL
+                type: "GET", // 요청 메서드("GET", "PUT", "POST", "DELETE") 등
+                success: function(response) {
+                    // 요청이 성공했을 때 실행되는 함수
+                    $(".recommend_answer_count").text(response);
+                    console.log("응답 : " + response);
+                },
+                error: function(xhr, status, error) {
+                    // 요청이 실패했을 때 실행되는 함수
+                    console.log("에러 : " + error);
+                }
+
+            });
+        }
+    });
+</script>
