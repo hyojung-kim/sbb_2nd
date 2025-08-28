@@ -67,4 +67,15 @@ public class CommentController {
         return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/delete/{id}")
+    public String answerDelete(Principal principal, @PathVariable("id") Integer id) {
+        Comment comment = this.commentService.getComment(id);
+        if (!comment.getAuthor().getUsername().equals(principal.getName())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
+        }
+        this.commentService.delete(comment);
+        return String.format("redirect:/article/detail/%s", comment.getArticle().getId());
+    }
+
 }
