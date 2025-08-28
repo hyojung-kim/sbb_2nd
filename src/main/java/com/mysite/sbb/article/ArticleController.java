@@ -24,11 +24,12 @@ public class ArticleController {
     private final UserService userService;
 
     @GetMapping("/list")
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
+    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page, @RequestParam(value = "kw", defaultValue = "") String kw) {
         //List<Article> artileList = this.articleService.findAll();
         //model.addAttribute("articleList", artileList);
-        Page<Article> paging = this.articleService.getList(page);
+        Page<Article> paging = this.articleService.getList(page, kw);
         model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
         return "article/article_list";
     }
     @GetMapping(value = "/detail/{id}")
