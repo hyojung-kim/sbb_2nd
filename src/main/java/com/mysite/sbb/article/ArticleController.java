@@ -29,14 +29,14 @@ public class ArticleController {
         //model.addAttribute("articleList", artileList);
         Page<Article> paging = this.articleService.getList(page);
         model.addAttribute("paging", paging);
-        return "/article/article_list";
+        return "article/article_list";
     }
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Integer id, CommentForm commentForm) {
         Article article = this.articleService.getArticle(id);
         model.addAttribute("article", article);
         model.addAttribute("commentForm", new CommentForm());
-        return "/article/article_detail";
+        return "article/article_detail";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -49,7 +49,7 @@ public class ArticleController {
     @PostMapping("/create")
     public String questionCreate(@Valid ArticleForm articleForm, BindingResult bindingResult, Principal principal) {
         if (bindingResult.hasErrors()) {
-            return "/article/article_form";
+            return "article/article_form";
         }
         // TODO 질문을 저장한다.
         SiteUser siteUser = this.userService.getUser(principal.getName());
@@ -66,7 +66,7 @@ public class ArticleController {
         }
         articleForm.setSubject(article.getSubject());
         articleForm.setContent(article.getContent());
-        return "/article/article_form";
+        return "article/article_form";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -74,7 +74,7 @@ public class ArticleController {
     public String questionModify(@Valid ArticleForm articleForm, BindingResult bindingResult,
                                  Principal principal, @PathVariable("id") Integer id) {
         if (bindingResult.hasErrors()) {
-            return "/article/article_form";
+            return "article/article_form";
         }
         Article article = this.articleService.getArticle(id);
         if (!article.getAuthor().getUsername().equals(principal.getName())) {

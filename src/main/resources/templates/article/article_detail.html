@@ -18,10 +18,15 @@
       </div>
 
     <h5 th:text="|${#lists.size(article.commentList)}개의 답변이 있습니다.|"></h5>
-    <div>
+    <div class="card my-3" th:each="comment : ${article.commentList}">
       <ul>
-        <span>답변 내용  </span>
-        <li th:each="comment : ${article.commentList}" th:text="${comment.content}"></li>
+          <span>답변 내용  </span>
+          <li th:text="${comment.content}">
+          </li>
+          <div>
+              <span>작성자</span>
+              <span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
+          </div>
       </ul>
     </div>
 
