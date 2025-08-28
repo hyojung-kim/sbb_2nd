@@ -27,6 +27,7 @@
               <span>작성자</span>
               <span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
           </div>
+          <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
       </ul>
     </div>
 
