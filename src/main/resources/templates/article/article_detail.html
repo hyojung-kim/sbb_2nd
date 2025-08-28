@@ -28,6 +28,10 @@
               <span th:if="${comment.author != null}" th:text="${comment.author.username}"></span>
           </div>
           <div th:text="${#temporals.format(comment.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+          <a th:href="@{|/comment/modify/${comment.id}|}" class="btn btn-sm btn-outline-secondary"
+             sec:authorize="isAuthenticated()"
+             th:if="${comment.author != null and #authentication.getPrincipal().getUsername() == comment.author.username}"
+             th:text="수정"></a>
       </ul>
     </div>
 
